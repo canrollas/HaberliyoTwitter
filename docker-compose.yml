@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - type: volume
+        source: mongodb_data
+        target: /data/db
+        volume:
+          nocopy: true
+    networks:
+      - news_network
+
+  news_parser:
+    build: .
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/
+      - RSS_FILE=rss_feed_list.csv
+    volumes:
+      - ./rss_feed_list.csv:/app/rss_feed_list.csv
+    networks:
+      - news_network
+    restart: always
+
+networks:
+  news_network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    name: news_parser_mongodb_data
+    driver: local 
