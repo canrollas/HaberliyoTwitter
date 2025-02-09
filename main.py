@@ -17,6 +17,7 @@ def main2():
     while True:
         try:
             parser.parse_feeds()
+            logger.info("News parsed successfully and this is for debugging updater.sh!!!")
             twitter.share_latest_news()
 
             logger.info("Waiting 15 minutes before next batch...")
