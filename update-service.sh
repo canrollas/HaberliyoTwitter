@@ -21,12 +21,12 @@ while true; do
     log "Güncellemeler kontrol ediliyor..."
     
     # Remote'dan son değişiklikleri getir
-    git fetch origin main
+    git fetch origin master
     check_error "Git fetch başarısız"
     
     # Yerel ve remote commit'leri karşılaştır
     LOCAL=$(git rev-parse HEAD)
-    REMOTE=$(git rev-parse origin/main)
+    REMOTE=$(git rev-parse origin/master)
     
     # Eğer güncelleme varsa
     if [ "$LOCAL" != "$REMOTE" ]; then
@@ -43,7 +43,7 @@ while true; do
         
         # Değişiklikleri çek
         log "Güncellemeler indiriliyor..."
-        git pull origin main
+        git pull origin master
         check_error "Git pull başarısız"
         
         # Servisleri yeniden başlat
