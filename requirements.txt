@@ -6,3 +6,6 @@ tweepy~=4.15.0
 requests~=2.32.3
 requests-oauthlib~=2.0.0
 python-dotenv~=1.0.1
+scikit-learn~=1.6.1
+nltk~=3.9.1
+TurkishStemmer~=1.3

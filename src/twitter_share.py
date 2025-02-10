@@ -3,16 +3,42 @@ from datetime import datetime, timedelta
 from pymongo import MongoClient
 import time
 import requests
-import json
 from requests_oauthlib import OAuth1
 import os
 from dotenv import load_dotenv
+from sklearn.feature_extraction.text import TfidfVectorizer
+import re
+import nltk
+from nltk.corpus import stopwords
 
+# İlk kez çalıştırıyorsan stopwords veri setini indir
+nltk.download('stopwords')
+
+# Türkçe stop words listesi
+turkish_stopwords = stopwords.words('turkish')
 # .env dosyasını yükle
 load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+
+
+
+def extract_keywords(text, num_keywords=5):
+    """Haber metninden önemli kelimeleri çıkar."""
+    text = re.sub(r'[^\w\s]', '', text).lower()  # Temizleme işlemi
+
+    # TF-IDF ile anahtar kelime çıkarımı
+    vectorizer = TfidfVectorizer(stop_words=turkish_stopwords)
+    tfidf_matrix = vectorizer.fit_transform([text])
+    feature_names = vectorizer.get_feature_names_out()
+    scores = tfidf_matrix.toarray().flatten()
+
+    keywords = [feature_names[i] for i in scores.argsort()[-num_keywords:][::-1]]
+    return keywords
+
 
 class TwitterShare:
     def __init__(self, mongodb_uri: str = None):
@@ -128,13 +154,15 @@ class TwitterShare:
                         },
                         sort=[("created_at", -1)]
                     )
-                    
+                    keywords = extract_keywords(latest_news['title'])
+                    hashtags = " ".join([f"#{word}" for word in keywords])
+
                     if latest_news:
                         tweet_text = (
                             f"{latest_news['title']}\n\n"
                             f"Kaynak: {latest_news['source']}\n"
                             f"{latest_news['url']}\n\n"
-                            f"#haber #{latest_news['source'].lower()}"
+                            f"#haber #{latest_news['source'].lower()} {hashtags}"
                         )
                         
                         response = self.post_tweet(tweet_text)
@@ -162,6 +190,6 @@ class TwitterShare:
                 except Exception as e:
                     logger.error(f"{source} kaynağı işlenirken hata: {str(e)}")
                     continue
-                    
+
         except Exception as e:
-            logger.error(f"share_latest_news'de hata: {str(e)}") 
+            logger.error(f"share_latest_news'de hata: {str(e)}")
