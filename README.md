@@ -88,4 +88,3 @@ We welcome contributions! Please:
 ## 📞 Contact
 
 - Twitter: [@haberliyobulten](https://twitter.com/haberliyobulten)
-- Email: [iletisim@haberliyo.com](mailto:iletisim@haberliyo.com)
