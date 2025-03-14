@@ -26,10 +26,14 @@ Haberliyo is a sophisticated Twitter bot that brings you the latest Turkish news
 
 - Python 3.8+
 - Twitter API v2
-- Docker
+- Docker & Docker Compose
+- MongoDB
+- FastAPI
+- Celery
+- Redis
 - Beautiful Soup 4
 - Requests
-- SQLite Database
+- Pytest
 
 ## 🚀 Getting Started
 
@@ -37,10 +41,51 @@ Haberliyo is a sophisticated Twitter bot that brings you the latest Turkish news
 
 - Python 3.8 or higher
 - Twitter API credentials
-- Docker (optional)
+- Docker and Docker Compose
+- MongoDB instance
 
 ### Installation
 
-1. **Clone the repository**
-2. **Install dependencies (Docker and Docker-compose will be enough)**
-3. **Run the bot via docker-compose**
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/kullanici/haberliyo-twitter.git
+   cd haberliyo-twitter
+   ```
+
+2. **Docker Installation:**
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Manual Installation:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+### Configuration
+
+1. Copy `.env.example` to `.env`
+2. Add your Twitter API credentials to `.env`
+3. Configure MongoDB connection string in `.env`
+4. Adjust other settings in `.env` as needed
+
+## 📝 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+We welcome contributions! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -am 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📞 Contact
+
+- Twitter: [@haberliyobulten](https://twitter.com/haberliyobulten)
+- Email: [iletisim@haberliyo.com](mailto:iletisim@haberliyo.com)
