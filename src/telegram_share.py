@@ -104,7 +104,7 @@ class TelegramShare:
             return []
 
     def share_latest_news(self):
-        """Günde maksimum 17 haber paylaşacak şekilde haberleri paylaş."""
+        """Günde maksimum 120 haber paylaşacak şekilde haberleri paylaş."""
         try:
             # Günlük paylaşım limitini kontrol et
             today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
@@ -113,15 +113,15 @@ class TelegramShare:
                 "shared_at": {"$gte": today_start}
             })
 
-            if daily_shares >= 17:
-                logger.info("Günlük paylaşım limiti doldu (17/17). Yarını bekleyeceğiz.")
+            if daily_shares >= 120:
+                logger.info("Günlük paylaşım limiti doldu (120/120). Yarını bekleyeceğiz.")
                 return
 
             # Kaç paylaşım yapabileceğimizi hesapla
-            remaining_shares = 17 - daily_shares
+            remaining_shares = 120 - daily_shares
             
-            # Her çalıştırmada maksimum 4 kaynak yerine, kalan limit kadar kaynak seç
-            share_count = min(4, remaining_shares)
+            # Her çalıştırmada maksimum 10 kaynak seç
+            share_count = min(10, remaining_shares)
             sources = self.get_next_sources(limit=share_count)
             
             for source in sources:

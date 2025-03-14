@@ -23,9 +23,9 @@ def main():
             # Haberleri paylaş
             telegram.share_latest_news()
             
-            # Bir sonraki çalıştırmadan önce 2 saat bekle
-            logger.info("Bir sonraki batch için 2 saat bekleniyor...")
-            time.sleep(7200)  # 2 saat
+            # Bir sonraki çalıştırmadan önce 30 dakika bekle
+            logger.info("Bir sonraki batch için 30 dakika bekleniyor...")
+            time.sleep(1800)  # 30 dakika
             
         except Exception as e:
             logger.error(f"Ana döngüde hata: {str(e)}")
